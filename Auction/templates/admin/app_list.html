@@ -1,0 +1,58 @@
+{% load i18n %}
+<div class="position-sticky">
+    <ul class="list-group list-group-light list-group-small mx-2 mt-4">
+      <li class="list-group-item">
+      {% if app_list %}
+          {% for app in app_list %}
+                      <a {% if not app.models and app.app_url %} href="{{ app.app_url }}" {% endif %}
+                                                            class="navbar-btn sidebar-link popup-section-link app-item"
+                                                            data-app-label="{{ app.app_label }}"
+                                                            data-popup-section-class="sidebar-popup-section-{{ app.app_label }}"
+                                                            data-order="{{ forloop.counter }}"
+                              {% if app.url_blank %} target="_blank"{% endif %}>
+                          <p style="background-color: #012657; border-radius: 5px; color: white; padding-left: 5px;" class="mt-2">
+                              {{ app.name }}
+                              {% if app.models %}
+                                  <span class="tim-icons icon-minimal-down m-2"></span>
+                              {% endif %}
+                          </p>
+                      </a>
+                      {% if app.models %}
+                          <ul class="list-group list-group-light">
+                              {% for model in app.models %}
+                                  {% if model.admin_url %}
+                                      <li class="{{ direction.panel }} list-group-item border-0">
+                                        <div class="row">
+                                          <div class="col">
+                                            <a href="{{ model.admin_url }}">
+                                              <span>{{ model.name }}</span>
+                                              <span class="tim-icons icon-minimal-{{ direction.notify }}"></span>
+                                          </a>
+                                          </div>
+                                          <div class="col">
+                                            {% if model.add_url %}
+                                            <a href="{{ model.add_url }}" class="addlink"><i class="fa fa-plus font-succcess"></i> {% translate 'Add' %}</a>
+                                        {% endif %}
+                                        {% if model.admin_url and show_changelinks %}
+                                        {% if model.view_only %}
+                                          <a href="{{ model.admin_url }}" class="viewlink">{% translate 'View' %}</a>
+                                        {% else %}
+                                          <a href="{{ model.admin_url }}" class="changelink"><i class="fa fa-pencil"></i> {% translate 'Change' %}</a>
+                                        {% endif %}
+                                      {% endif %}
+                                          </div>
+                                        </div>
+                                        <hr>
+                                      </li>
+                                  {% else %}
+                                      <li class="list-group-item">{{ model.name }}</li>
+                                  {% endif %}
+                              {% endfor %}
+                          </ul>
+                      {% endif %}
+                
+          {% endfor %}
+      {% endif %}
+      </li>
+  </ul>
+</div>

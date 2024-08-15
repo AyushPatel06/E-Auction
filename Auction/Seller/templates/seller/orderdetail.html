@@ -1,0 +1,110 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% block content %}
+    <section style="margin-top: 50px;">
+        <div class="container py-5">
+            <div class="row">
+              <div class="col">
+                <nav aria-label="breadcrumb" class="bg-light rounded-3 p-3 mb-4">
+                  <ol class="breadcrumb mb-0">
+                    <li class="breadcrumb-item"><a href="{% url 'Seller:index' %}">Home</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Order Detail</li>
+                  </ol>
+                </nav>
+              </div>
+            </div>
+            <div class="row">
+                <div class="card col mb-4">
+                  <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-3">
+                          <p class="mb-0">Customer Name</p>
+                        </div>
+                        <div class="col-md-9">
+                          <p class="text-muted mb-0">{{user.first_name}} {{user.last_name}}</p>
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <p class="mb-0">Order ID</p>
+                        </div>
+                        <div class="col-sm-9">
+                          <p class="text-muted mb-0">{{order.order_id}}</p>
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <p class="mb-0">Order Placed</p>
+                        </div>
+                        <div class="col-sm-9">
+                          <p class="text-muted mb-0">{{order.date}}</p>
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <p class="mb-0">Product Name</p>
+                        </div>
+                        <div class="col-sm-9">
+                          <p class="text-muted mb-0">{{product.product_name}}</p>
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <p class="mb-0">Product Price</p>
+                        </div>
+                        <div class="col-sm-9">
+                          <p class="text-muted mb-0">{{product.current_bid}}</p>
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <p class="mb-0">Payment Status</p>
+                        </div>
+                        <div class="col-sm-9">
+                          <p class="text-muted mb-0">{{order.paymentstatus}}</p>
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <p class="mb-0">Order Status</p>
+                        </div>
+                        <div class="col-sm-9">
+                          <p class="text-muted mb-0">{{order.status}}</p>
+                        </div>
+                      </div>
+                      <hr>
+                      <div class="row">
+                        <div class="col-sm-3">
+                          <p class="mb-0">Payment Type</p>
+                        </div>
+                        <div class="col-sm-9">
+                          <p class="text-muted mb-0">{{order.payment}}</p>
+                        </div>
+                      </div>
+                      <div class="row pt-5">
+                        {% if order.paymentstatus == '' %}
+                        <form style="display: inline;" method="post">
+                            <input type="text" name="odrr" value="{{order.order_id}}" style="display: none;">
+                            <input type="text" name="ps" value="Payment Received" style="display: none;">
+                            <button type="submit" class="btn btn-outline-primary" style="color: #012657;">Payment Received</button>
+                        </form>
+                        {% endif %}
+                      </div>
+                  </div>
+                </div>
+            </div>
+          </div>
+    </section>
+    <script>
+        if ( window.history.replaceState ) {
+         window.history.replaceState( null, null, window.location.href );
+       }
+       </script>
+{% endblock content %}
+    

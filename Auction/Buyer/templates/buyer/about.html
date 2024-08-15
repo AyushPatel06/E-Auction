@@ -1,0 +1,168 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+<style>
+    .rate > input{
+	display: none;
+  }
+  
+  .rate{
+	display: inline-block;;
+	border: 0;
+  }
+  
+  .rate > label{
+	float: right;
+  }
+  
+  /* Showing the stars */
+  .rate > label:before{
+	display: inline-block;
+	font-size: 1.1rem;
+	font-family: FontAwesome;
+	content: "\f005";
+	margin:0;
+	padding:0.3rem .2rem;
+	cursor: pointer;
+  }
+  
+  /* Click and hover */
+  input:checked ~ label, label:hover ~ label{
+	color: #ffb301;
+  }
+  
+  /* hover hightlight */
+  input:checked + label:hover, input:checked ~ label:hover,input:checked ~ label:hover ~ label,
+  label:hover ~ input:checked ~ label{
+	color: #ffb301;
+  }
+  
+  .rating-star i{
+	color: #ffb301 !important;
+  }
+</style>
+<section class="popular-auction padding-top pos-rel py-5 mt-5" style="background-image: url('/static/image/Rectangle\ 1.png'); background-repeat: no-repeat; background-size: auto;">
+    <div class="container">
+          <div class="row px-5 mt-5">
+            <div class="col-12 m-auto">
+                      <div class="card pt-5">
+                        <div class="card-body">
+                            <div class="row g-0">
+                                <div class="col-xl-6">
+                                <div class="p-md-5">
+                                    <h4 class="fw-3" style="color: #012657;">ABOUT US</h4><hr>
+                                    <h6 class="text-muted pt-3 text-justify">"E-Auction" is an online auction web site aimed at taking the auction to the fingertips of aspiring bidders there by opening up the doors of the "OPEN Auction House' to a wider cross section of Art Lovers and Antique Collectors. This site also acts as an open forum where buyers and sellers can come together and exchange their products. </h6>
+                                </div>
+                                </div>
+                                <div class="col-xl-6 d-none d-xl-block">
+                                  <img
+                                    src="{% static 'image/Group 1.svg' %}"
+                                    alt="Sample photo"
+                                    class="img-fluid"
+                                    style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;"
+                                  />
+                                </div>
+                              </div>
+                        </div>
+                     </div>
+            </div>
+        </div>
+    </div>
+  </section>
+<section class="overview-section py-5">
+    <div class="container mw-lg-100 p-lg-0">
+        <div class="card">
+            <div class="card-body">
+                <div class="row m-0">
+                    <div class="col-xl-6 p-0">
+                        <div class="overview-content">
+                            <div class="section-header text-lg-left">
+                                <h2 class="title">What can you expect?</h2>
+                                <p>Voluptate aut blanditiis accusantium officiis expedita dolorem inventore odio reiciendis obcaecati quod nisi quae</p>
+                            </div>
+                            <div class="row mb-50 h-100">
+                                <div class="col-sm-6 col-lg-12">
+                                    <div class="expert-item">
+                                        <div class="thumb py-4">
+                                            <img src="{% static 'image/01.png' %}" alt="overview">
+                                        </div>
+                                        <div class="content">
+                                            <h6 class="title">Real-time Auction</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-lg-12">
+                                    <div class="expert-item">
+                                        <div class="thumb py-4">
+                                            <img src="{% static 'image/02.png' %}" alt="overview">
+                                        </div>
+                                        <div class="content">
+                                            <h6 class="title">Supports Multiple Currency</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-6 col-lg-12">
+                                    <div class="expert-item">
+                                        <div class="thumb py-4">
+                                            <img src="{% static 'image/03.png' %}" alt="overview">
+                                        </div>
+                                        <div class="content">
+                                            <h6 class="title">Winner Announcement</h6>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-xl-6 d-xl-block">
+                        <div class="w-100 h-100 mx-5" style="background-image: url('/static/image/Group\ 2.svg'); background-repeat: no-repeat; background-size: auto;"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+<section>
+    <div class="container">	  
+        <div class="row justify-content-center">
+          <div class="col-lg-6 col-sm-12">
+              {% if messages %}
+              {% for message in messages %}
+              <div class="alert alert-{{message.tags}}">{{ message }}</div>
+              {% endfor %}
+              {% endif %}
+  
+  
+              <form action="{% url 'Buyer:submit_review' %}" method="POST">
+                  {% csrf_token %}
+                  <h5>Write Your Review</h5>
+  
+                  <div>
+                      <!-- Rating stars -->
+                      <label>How do you rate this site?</label>
+                      <br>
+                      <div class="rate">
+                          <input type="radio" name="rating" id="rating10" value="5" required /><label for="rating10" title="5"></label>
+                          <input type="radio" name="rating" id="rating8" value="4" required /><label for="rating8" title="4"></label>
+                          <input type="radio" name="rating" id="rating6" value="3" required /><label for="rating6" title="3"></label>
+                          <input type="radio" name="rating" id="rating4" value="2" required /><label for="rating4" title="2"></label>
+                          <input type="radio" name="rating" id="rating2" value="1" required /><label for="rating2" title="1"></label>
+                          
+                      </div>
+                      <br>
+                      Review:
+                      <textarea name="review" rows="4" class="form-control"></textarea>
+                      <br>
+                      {% if request.user.is_authenticated %}
+                              <input type="submit" value="Submit Review" class="btn btn-primary mb-5">
+                      {% else %}
+                      <p>You must be logged in to post a review. <span><a href="{% url 'Buyer:index' %}">Login now</a></span></p>
+                      {% endif %}
+                  </div>
+              </form>
+          </div> <!-- col.// -->
+      </div> <!-- row.// -->
+  </div>
+</section>
+{% endblock content %}
+    

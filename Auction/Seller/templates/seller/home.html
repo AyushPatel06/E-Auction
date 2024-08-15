@@ -1,0 +1,151 @@
+{% extends 'base2.html' %}
+{% block content %}
+<section style="margin-top: 50px;">
+<div class="row">
+    <div class="col-xl-4 col-sm-4 col-12 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between px-md-1">
+            <div>
+              <h3 class="text-primary">{{ordered}}</h3>
+              <p class="mb-0">Total Orders</p>
+            </div>
+            <div class="align-self-center">
+              <i class="fa-solid fa-box-open text-primary fa-3x"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-4 col-sm-4 col-12 mb-4">
+      <div class="card">
+        <div class="card-body">
+          <div class="d-flex justify-content-between px-md-1">
+            <div>
+              <h3 class="text-danger">{{pending}}</h3>
+              <p class="mb-0">Pending Orders</p>
+            </div>
+            <div class="align-self-center">
+              <i class="fa-solid fa-truck-fast text-danger fa-3x"></i>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-4 col-sm-4 col-12 mb-4">
+        <div class="card">
+          <div class="card-body">
+            <div class="d-flex justify-content-between px-md-1">
+              <div>
+                <h3 class="text-success">{{delivered}}</h3>
+                <p class="mb-0">Delivered Orders</p>
+              </div>
+              <div class="align-self-center">
+                <i class="fa-solid fa-truck-ramp-box text-success fa-3x"></i>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+</section>
+<section class="mb-4">
+    <div class="card">
+      <div class="card-header py-3">
+        <h5 class="mb-0 text-center"><strong>Sales</strong></h5>
+        <h6 class="text-danger text-center" id="msg"></h6>
+      </div>
+      <div class="card-body" >
+        <form id="filterForm">
+            <label for="year">Choose a year:</label>
+            <select class="form-control-sm" name="year" id="year"></select>
+            <input class="btn btn-sm btn-outline-success" type="submit" value="Load" name="_load">
+          </form>
+        <div id="charts">
+            <canvas class="my-4 w-100" id="myChart"></canvas>
+        </div>
+      </div>
+    </div>
+  </section>
+  <script>
+    $(document).ready(function() {
+      $.ajax({
+        url: "/seller/chart/filter-options/",
+        type: "GET",
+        dataType: "json",
+        success: (jsonResponse) => {
+          // Load all the options
+          jsonResponse.options.forEach(option => {
+            $("#year").append(new Option(option, option));
+          });
+          // Load data for the first option
+          loadAllCharts($("#year").children().first().val());
+        },
+        error: () => document.getElementById('msg').innerHTML="Failed to fetch chart filter options!"
+      });
+    });
+  
+    $("#filterForm").on("submit", (event) => {
+      event.preventDefault();
+  
+      const year = $("#year").val();
+      loadAllCharts(year);
+    });
+  
+    function loadChart(chart, endpoint) {
+      $.ajax({
+        url: endpoint,
+        type: "GET",
+        dataType: "json",
+        success: (jsonResponse) => {
+          // Extract data from the response
+          const title = jsonResponse.title;
+          const labels = jsonResponse.data.labels;
+          const datasets = jsonResponse.data.datasets;
+  
+          // Reset the current chart
+          chart.data.datasets = [];
+          chart.data.labels = [];
+  
+          // Load new data into the chart
+          chart.options.title.text = title;
+          chart.options.title.display = true;
+          chart.data.labels = labels;
+          datasets.forEach(dataset => {
+              chart.data.datasets.push(dataset);
+          });
+          chart.update();
+        },
+        error: () => console.log("Failed to fetch chart data from " + endpoint + "!")
+      });
+    }
+  
+    function loadAllCharts(year) {
+      loadChart(myChart, `/seller/chart/sales/${year}/`);
+    }
+  </script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.js">
+  </script>
+  <script>
+      var ctx = document.getElementById("myChart");
+var myChart = new Chart(ctx, {
+  type: "line",
+  options: {
+    scales: {
+      yAxes: [
+        {
+          ticks: {
+            beginAtZero: false,
+          },
+        },
+      ],
+    },
+    legend: {
+      display: false,
+    },
+  },
+  responsive: true,
+});
+  </script>
+{% endblock content %}
+    

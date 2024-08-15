@@ -1,0 +1,203 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% load app_tags %}
+{% block content %}
+<section style="margin-top: 100px;">
+    <div class="justify-content-center">
+         <!-- Pills navs -->
+<ul class="nav nav-pills mb-3 justify-content-center" id="ex1" role="tablist">
+    <li class="nav-item" role="presentation">
+      <a class="nav-link active" id="ex1-tab-1" data-mdb-toggle="pill" href="#view_product" role="tab" aria-controls="view_product" aria-selected="true">View Orders</a>
+    </li>
+    <li class="nav-item" role="presentation">
+      <a class="nav-link" id="ex1-tab-2" data-mdb-toggle="pill" href="#deliver_product" role="tab" aria-controls="deliver_product" aria-selected="false">View Delivered Products</a>
+    </li>
+    <li class="nav-item" role="presentation">
+        <a class="nav-link" id="ex1-tab-3" data-mdb-toggle="pill" href="#cancle_product" role="tab" aria-controls="cancle_product" aria-selected="false">View Cancled Products</a>
+      </li>
+  </ul>
+  <!-- Pills navs -->
+  
+  <!-- Pills content --> 
+  <div class="tab-content" id="ex1-content">
+    <div class="tab-pane fade show active" id="view_product" role="tabpanel" aria-labelledby="ex1-tab-1">
+        <div class="container-fluid my-4 d-flex justify-content-center">
+                        
+            <div class="card" style="width: 100%;">
+                <div class="card col-12 card-stepper text-black" style="border-radius: 16px;">
+                    <div class="card-header">
+                        <form action="{% url 'Seller:search' %}">
+                        <div class="input-group justify-content-end">
+                            <div class="form-outline">
+                              <input type="search" id="form1" name="query" class="form-control" />
+                              <label class="form-label" for="form1">Search</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                              <i class="fas fa-search"></i>
+                            </button>
+                          </div>
+                        </form>
+                    </div>
+                    <div class="card-body p-5">
+                    {% if orders %}
+                    {% for ord in orders %}
+                    <div class="row">
+                        {% for item in ord.products|split:',' %}
+                    <div class="d-flex justify-content-between align-items-center mb-5">
+                        <div>
+                        <h5 class="mb-0" style="font-size: medium;">ORDER <span class="text-primary font-weight-bold">#{{ord.order_id}}</span></h5>
+                        </div>
+                        <div class="text-end" style="font-size: small;">
+                        <p class="mb-0"> {{item|product:'|'|slice:'0:1'|remfl:'2'}}</p>
+                        <p class="mb-0"><i class="fa-sharp fa-solid fa-dollar-sign"> <span class="font-weight-bold">{{item|product:'|'|slice:'2:3'|remfl:'1'}}</span></i></p>
+                        </div>
+                    </div>
+                    <div style="float: right;">
+                        {% csrf_token %}
+                        {% if ord.status != 'Packed' and ord.status != 'Delivered' %}
+                        <form style="display: inline;" method="post">
+                            <input type="text" name="odrr" value="{{ord.order_id}}" style="display: none;">
+                            <input type="text" name="st" value="Packed" style="display: none;">
+                            <button type="submit" class="btn btn-outline-success" style="color: #012657;">Packed</button>
+                        </form>
+                        {% endif %}
+                        {% if ord.status != 'Delivered' %}
+                        <form style="display: inline;" method="post">
+                            <input type="text" name="odrr" value="{{ord.order_id}}" style="display: none;">
+                            <input type="text" name="st" value="Delivered" style="display: none;">
+                            <button type="submit" class="btn btn-outline-warning" style="color: #012657;">Delivered</button>
+                        </form>
+                        {% endif %}
+                        <form style="display: inline;" method="post">
+                            <input type="text" name="odrr" value="{{ord.order_id}}" style="display: none;">
+                            <input type="text" name="st" value="Cancel" style="display: none;">
+                            <button type="submit" class="btn btn-outline-danger" style="color: #012657;">Cancel</button>
+                        </form>
+                        {% if ord.paymentstatus == '' %}
+                        <form style="display: inline;" method="post">
+                            <input type="text" name="odrr" value="{{ord.order_id}}" style="display: none;">
+                            <input type="text" name="ps" value="Payment Received" style="display: none;">
+                            <button type="submit" class="btn btn-outline-primary" style="color: #012657;">Payment Received</button>
+                        </form>
+                        {% endif %}
+                    </div>
+                    {% endfor %}
+                    </div>
+                    <hr>
+                    {% endfor %}
+                    {% else %}
+                    <h5 class="text-danger text-center">Currently you haven't any placed order...</h5>
+                    {% endif %}
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="deliver_product" role="tabpanel" aria-labelledby="ex1-tab-2">
+        <div class="container-fluid my-4 d-flex justify-content-center">
+                        
+            <div class="card" style="width: 100%;">
+                <div class="card col-12 card-stepper text-black" style="border-radius: 16px;">
+                    <div class="card-header ">
+                        <form action="{% url 'Seller:search' %}">
+                        <div class="input-group justify-content-end">
+                            <div class="form-outline">
+                              <input type="search" id="form1" name="query" class="form-control" />
+                              <label class="form-label" for="form1">Search</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                              <i class="fas fa-search"></i>
+                            </button>
+                            
+                          </div>
+                        </form>
+                    </div>
+                    <div class="card-body p-5">
+                    {% if delivered %}
+                    {% for ord in delivered %}
+                    <div class="row">
+                    {% for item in ord.products|split:',' %}
+                    <div class="d-flex justify-content-between align-items-center mb-5">
+                        <div>
+                        <h5 class="mb-0" style="font-size: medium;">ORDER <span class="text-primary font-weight-bold">#{{ord.order_id}}</span></h5>
+                        </div>
+                        <div class="text-end" style="font-size: small;">
+                        <p class="mb-0"> {{item|product:'|'|slice:'0:1'|remfl:'2'}}</p>
+                        <p class="mb-0"><i class="fa-sharp fa-solid fa-dollar-sign"> <span class="font-weight-bold">{{item|product:'|'|slice:'2:3'|remfl:'1'}}</span></i></p>
+                        </div>
+                    </div>
+                    {% if ord.paymentstatus == '' %}
+                    <form style="display: inline;" method="post">
+                        <input type="text" name="odrr" value="{{ord.order_id}}" style="display: none;">
+                        <input type="text" name="ps" value="Payment Received" style="display: none;">
+                        <button type="submit" class="btn btn-outline-primary" style="color: #012657;">Payment Received</button>
+                    </form>
+                    {% endif %}
+                    
+                    {% endfor %}
+                    </div>
+                    <hr>
+                    {% endfor %}
+                    {% else %}
+                    <h5 class="text-danger text-center">Currently you haven't any delivered order...</h5>
+                    {% endif %}
+                    </div>
+        
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="tab-pane fade" id="cancle_product" role="tabpanel" aria-labelledby="ex1-tab-3">
+        <div class="container-fluid my-4 d-flex justify-content-center">
+                        
+            <div class="card" style="width: 100%;">
+                <div class="card col-12 card-stepper text-black" style="border-radius: 16px;">
+                    <div class="card-header ">
+                        <form action="{% url 'Seller:search' %}">
+                        <div class="input-group justify-content-end">
+                            <div class="form-outline">
+                              <input type="search" id="form1" name="query" class="form-control" />
+                              <label class="form-label" for="form1">Search</label>
+                            </div>
+                            <button type="submit" class="btn btn-primary">
+                              <i class="fas fa-search"></i>
+                            </button>
+                            
+                          </div>
+                        </form>
+                    </div>
+                    <div class="card-body p-5">
+                    {% if cancel %}
+                    {% for ord in cancel %}
+                    {% for item in ord.products|split:',' %}
+                    <div class="d-flex justify-content-between align-items-center mb-5">
+                        <div>
+                        <h5 class="mb-0" style="font-size: medium;">ORDER <span class="text-primary font-weight-bold">#{{ord.order_id}}</span></h5>
+                        </div>
+                        <div class="text-end" style="font-size: small;">
+                        <p class="mb-0"> {{item|product:'|'|slice:'0:1'|remfl:'2'}}</p>
+                        <p class="mb-0"><i class="fa-sharp fa-solid fa-dollar-sign"> <span class="font-weight-bold">{{item|product:'|'|slice:'2:3'|remfl:'1'}}</span></i></p>
+                        </div>
+                    </div>
+                    <hr>
+                    {% endfor %}
+                    {% endfor %}
+                    {% else %}
+                    <h5 class="text-danger text-center">Currently you haven't any cancled order...</h5>
+                    {% endif %}
+                    </div>
+        
+                </div>
+            </div>
+        </div>
+    </div>
+  </div>
+  <!-- Pills content -->
+    </div>
+</section>
+<script>
+    if ( window.history.replaceState ) {
+     window.history.replaceState( null, null, window.location.href );
+   }
+   </script>
+{% endblock %}

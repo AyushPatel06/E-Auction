@@ -1,0 +1,132 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% block content %}
+{% now "Y-m-d-H-i-s" as todays_date %}
+<div class="container h-200">
+  <div class="row d-flex justify-content-center align-items-center h-100">
+    <div class="col-12">
+      <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+        <div class="card-body p-0">
+          <form method="POST" enctype="multipart/form-data">
+              {% if messages %}
+                 {% for message in messages %}
+                    <div class="alert alert-{{message.tags}}">{{ message }}</div>
+                 {% endfor %}
+              {% endif %}
+              <h2 class="py-5" style="text-align: center; color: #012657;">Add Product</h2>
+          <div class="row g-0">
+            <div class="col-lg-6">
+              <div class="p-5">
+                <div class="mb-4 pb-2">
+                  <div class="form-outline">
+                    <input type="text" name='prod_name' id="product_name" class="form-control form-control-lg"  style="color: #012657;"/>
+                    <label class="form-label" for="product_name" style="color: #012657;">Product Name</label>{{p.product_name}}
+                  </div>
+                </div>
+                <div class="row">
+                  <div class="col-md-6 pb-2">
+                      <select class="form-control form-control-lg" name="category" id="category"  style="color: #012657;" >
+                          <option selected  style="color: #012657;">Select Category Here...</option>
+                          {% for sc in subcat %}
+                  <option value="{{sc.0.id}}">{{sc.0}}</option>
+                  {% endfor %}
+                        </select>
+                  </div>
+                  <div class="col-md-6 pb-2">
+                      <select class="form-control form-control-lg" name="subcategory" id="subcategory"  style="color: #012657;" >
+                          <option selected  style="color: #012657;">Select Subcategory Here...</option>
+                      </select>
+                  </div>
+                </div>
+                <div class="row py-3">
+                  <div class="col-md-6 pb-2">
+                    <div class="form-outline">
+                        <input type='text' name="start" class="form-control form-control-lg" onfocus="(this.type = 'datetime-local')"  style="color: #012657;" aria-valuemin="{{todays_date}}"/>
+                        <label class="form-label"  style="color: #012657;">Starting Time</label>
+                    </div>
+                  </div>
+                  <div class="col-md-6 pb-2">
+                    <div class="form-outline">
+                      <input type='text' name="end" class="form-control form-control-lg" onfocus="(this.type = 'datetime-local')"  style="color: #012657;" />
+                      <label class="form-label"  style="color: #012657;">Ending Time</label>
+                  </div>
+                  </div>
+                </div>
+                <div class="row">
+                <div class="pb-2">
+                  <div class="form-outline">
+                    <input type="number" name='price' id="bid_price" class="form-control form-control-lg"  style="color: #012657;" />
+                    <label class="form-label" for="bid_price"  style="color: #012657;">Starting Bidding Price</label>
+                  </div>
+                </div>
+                </div>
+                  </div>
+                </div>
+            <div class="col-lg-6 bg-indigo text-black ">
+              <div class="p-5">
+                  <div class="form-outline">
+                      <textarea class="form-control" rows="4" aria-label="With textarea" name="desc" id="desc"  style="color: #012657;"></textarea>
+                      <label class="form-label" for="desc"  style="color: #012657;">Description</label>
+                  </div>
+                  <div class="row py-2">
+                      <div class="col-md-6">
+                          <input type="file" name="img1" accept="image/*" class="clearablefileinput form-control"  style="color: #012657;"  required>
+                      </div>
+                      <div class="col-md-6">
+                          <input type="file" name="img2" accept="image/*" class="clearablefileinput form-control"  style="color: #012657;">
+                      </div>
+                  </div>
+                  <div class="row py-2">
+                      <div class="col-md-6">
+                          <input type="file" name="img3" accept="image/*" class="clearablefileinput form-control"  style="color: #012657;">
+                      </div>
+                      <div class="col-md-6">
+                          <input type="file" name="img4" accept="image/*" class="clearablefileinput form-control"  style="color: #012657;">
+                      </div>
+                  </div>
+                  <div class="row py-2">
+                      <div class="col-md-6">
+                          <input type="file" name="img5" accept="image/*" class="clearablefileinput form-control"  style="color: #012657;">
+                      </div>
+                      <div class="col-md-6">
+                          <input type="file" name="img6" accept="image/*" class="clearablefileinput form-control"  style="color: #012657;">
+                      </div>
+                  </div>
+                {% csrf_token %}
+                
+
+              </div>
+            </div>
+          </div>
+              <button type="submit" class="btn btn-lg align-items-center col-12 text-white" style="background-color: #012657;">Add Product</button>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script type="text/javascript">
+	function subcat() {
+		{% for sc in subcat %}
+		if (document.getElementById('category').value == {{sc.0.id}}) {
+		$("#subcategory")
+	    .replaceWith('<select id="subcategory" name="subcategory" class="form-control form-control-lg">' + 
+        '<option selected>Select Subcategory Here...</option>' +
+	    	 {% for op in sc|slice:"1:" %}
+	          '<option value="{{op}}" >{{op}}</option>' +
+	         {% endfor %}
+	        '</select>');
+		}
+	    {% endfor %}
+	}
+	document.getElementById('category').onchange = subcat;
+</script>
+<script>
+var today = new Date().toISOString().slice(0, 16);
+document.getElementsByName("start")[0].min = today;
+document.getElementsByName("end")[0].min = today;
+</script>
+
+{% endblock content %}
+

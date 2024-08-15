@@ -1,0 +1,24 @@
+{% load crispy_forms_tags %}
+<div class="card mb-4">
+    <div class="card-body text-center">
+      <div class="container-profilepic card rounded-circle overflow-hidden">
+        <div class="photo-preview card-img w-100 h-100"></div>
+        {% if address.photo %}
+        <div class="middle-profilepic text-center card-img-overlay d-none flex-column justify-content-center">
+            <div class="text-profilepic text-white" style=" margin: auto; font-size: large;">
+              Change It<br>
+             <i class="fa fa-camera"></i>
+             <div>{{address.photo | as_crispy_field}}</div>      
+            </div>
+        </div>
+        {% endif %}
+      </div>
+      <h5 class="my-3">{{request.user.first_name}} {{request.user.last_name}}</h5>
+      <p class="text-muted mb-1">{{request.user.email}}</p>
+      <p class="text-muted mb-1">Joined at {{request.user.date_joined}}</p>
+    </div>
+  </div>
+  <ul class="list-group pb-3">
+    <a class="list-group-item {% if '/profile/' in request.path %}text-success{% endif %}" href="{% url 'Seller:profile' %}"> My Profile </a>
+    <a class="list-group-item {% if '/change-password/' in request.path %}text-success{% endif %}" href="{% url 'change_password1' %}"> Change Password </a>
+  </ul>

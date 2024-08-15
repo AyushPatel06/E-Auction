@@ -1,0 +1,81 @@
+
+{% load static %}
+<div class="tab-pane fade" id="tabs-register" role="tabpanel" aria-labelledby="tab-register">
+    <div class="row d-flex justify-content-center align-items-center h-100" >
+    <div class="col">
+      <div class="card card-registration my-4">
+        <div class="row g-0">
+          <div class="col-xl-6 d-none d-xl-block">
+            <img
+              src="{% static 'image/Sign up.png' %}"
+              alt="Sample photo"
+              class="img-fluid"
+              style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem; object-fit: cover;"
+            />
+          </div>
+          <div class="col-xl-6">
+            <div class="card-body p-md-5 text-black">
+              <form method="POST" action="{% url 'Buyer:register' %}">
+                {% csrf_token %}
+               
+                <div class="row">
+                    <div class="col-md-6 mb-4">
+                      <div class="form-outline">
+                        <input type="text" name="first_name" id="first_name" class="form-control form-control-lg" style="height: 50px;"/><span class="fa fa-user" style="float: right;position: relative; margin-top: -30px; margin-right: 8px; color: #012657;"></span>
+                        <label class="form-label" for="first_name" style="color: #012657;">First name</label>
+                      </div>
+                    </div>
+                    <div class="col-md-6 mb-4">
+                      <div class="form-outline">
+                        <input type="text" name="last_name" id="last_name" class="form-control form-control-lg" style="height: 50px;"/><span class="fa fa-user" style="float: right;position: relative; margin-top: -30px; margin-right: 8px; color: #012657;"></span>
+                        <label class="form-label" for="last_name" style="color: #012657;">Last name</label>
+                      </div>
+                    </div>
+                  </div>
+                    <div class="form-outline mb-4">
+                        <input type="text" id="username" name="username" class="form-control form-control-lg" style="height: 50px;" required ><span class="fa fa-user" style="float: right;position: relative; margin-top: -34px; margin-right: 8px; color: #012657;"></span>
+                        <label class="form-label" for="username" style="color: #012657;">Username</label>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                      <input type="email" id="email" name="email" class="form-control form-control-lg" style="height: 50px;" required><span class="fa fa-envelope" style="float: right;position: relative; margin-top: -34px; margin-right: 8px; color: #012657;"></span>
+                      <label class="form-label" for="email" style="color: #012657;">Email ID</label>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                      <input type="password" id="password" name="password" class="form-control form-control-lg" style="height: 50px;" required><span class="fa fa-key" style="float: right;position: relative; margin-top: -34px; margin-right: 8px; color: #012657;"></span>
+                      <label class="form-label" for="password" style="color: #012657;">Password</label>
+                    </div>
+
+                    <div class="form-outline mb-4">
+                      <input type="password" id="confirmpassword" name="confirmpassword" class="form-control form-control-lg" style="height: 50px;" required><span class="fa fa-key" style="float: right;position: relative; margin-top: -34px; margin-right: 8px; color: #012657;"></span>
+                      <label class="form-label" for="confirmpassword" style="color: #012657;">Confirm Password</label>
+                    </div>
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="RadioOptions" id="buyer" value="buyer" />
+                      <label class="form-check-label" for="buyer">As Bidder</label>
+                    </div>
+                    
+                    <div class="form-check form-check-inline">
+                      <input class="form-check-input" type="radio" name="RadioOptions" id="seller" value="seller" />
+                      <label class="form-check-label" for="seller">As Auctioneer</label>
+                    </div>
+                   <!-- <div class="form-check-inline form-switch">
+                      <input class="form-check-input" type="checkbox" role="switch" id="bidder" name='buyer' onchange="document.getElementById('auctioneer').disabled = true;" style="background-color: #012657;" required/>
+                      <label class="form-check-label" for="bidder" style="color: #012657;">As Bidder</label>
+                    </div>
+                    <div class="form-check-inline form-switch">
+                      <input class="form-check-input" type="checkbox" role="switch" id="auctioneer" name="seller" onchange="document.getElementById('bidder').disabled = true;" style="background-color: #012657;" required/>
+                      <label class="form-check-label" for="auctioneer" style="color: #012657;">As Auctioneer</label>
+                    </div>-->
+                    <div class="d-flex justify-content-end pt-3">
+                      <button type="submit" class="btn btn-lg ms-2 text-white" style="background-color: #012657; width: 100%;">Register</button>
+                    </div>
+              </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    </div>
+    </div>

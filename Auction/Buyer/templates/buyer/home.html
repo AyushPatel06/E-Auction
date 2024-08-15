@@ -1,0 +1,325 @@
+{% extends 'base.html' %}
+{% load static %}
+{% load app_tags %}
+{% block content %}
+{% now "Y-m-d-H-i-s" as todays_date %}
+<style>
+    @media  screen and (min-width:992px) {
+        .CoverImage {
+            background-position: center;
+            width: 100%;
+            height: 700px;
+            background-size: cover;
+            background-repeat: no-repeat;
+            border-radius: 200%/40%;
+            border-top-left-radius: 0;
+            border-top-right-radius: 0;
+            
+    }
+    
+    }
+    @media screen and (max-width: 480px) {
+      .CoverImage{
+              background-position: center;
+              width: 100%;
+              height: 700px;
+              background-size: cover;
+              background-repeat: no-repeat;
+            }
+    
+    }
+    
+    @media screen and (max-width: 768px) {
+      .CoverImage{
+              background-position: center;
+              width: 100%;
+              height: 700px;
+              background-size: cover;
+              background-repeat: no-repeat;
+            }
+    }
+            
+    @media screen and (max-width: 1024px) {
+      .CoverImage{
+              background-position: center;
+              width: 100%;
+              height: 700px;
+              background-size: cover;
+              background-repeat: no-repeat;
+            }
+     }
+    
+    .img1 {
+        height: 250px;
+        background-size: cover;
+        background-position: center;
+        border-radius: 5px;
+    }
+    .step1:after {
+    position: absolute;
+    content: "\f105";
+    top: 10%;
+    font-size: 20px;
+    color: #012657;
+    right: 20%;
+    font-family: FontAwesome;
+}
+</style>
+<section>
+<div class="img-fluid CoverImage" style="background-image:url('/static/image/auction.jpg'); filter: blur(2px);" ></div>
+<div  class="text-center" style="position: absolute;top: 35%;left: 50%;transform: translate(-50%, -50%); color: white; font-size: xx-large; font-family: sans-serif;">Eyes Have Lids and Auctions Have Bids</div>
+<form action="/search">
+<div class="justify-content-center align-items-center input-group" style="margin-top:-350px;">
+  <div class="form-outline">
+    <input type="search" name="query" id="form1" class="form-control text-white" style="width: 350px;"/>
+    <label class="form-label text-white" for="form1">Search</label>
+  </div>
+  <button type="submit" class="btn" style="background-color: #012657; color: white;">
+    <i class="fas fa-search"></i>
+  </button>
+</div>
+</form>
+</section>
+<div class="row" style="height: 100px;">
+  <div  class="text-center" style="position: absolute;top: 67%;left: 50%;transform: translate(-50%, -50%); color: white; font-size: large; font-family: sans-serif;">Popular Categories</div>
+</div>
+<section>
+  <div class="container-fluid my-5">
+    <div class="row">
+        <div class="col-6 m-auto">
+            <div class="owl-carousel owl-theme">
+                <div class="item active mb-4">
+                    <div class="card border-0 img1 card_front" style="background-image: url('/static/image/ele.png');" onmouseover="ele(this)" onmouseout="ele1(this)">
+                      <span class="text text-center text-white" style="margin-top: 200px;">Electronics</span>
+                    </div>
+                </div>
+  
+                <div class="item">
+                    <div class="card border-0 shadow img1" style="background-image:url('/static/image/watch.png');" onmouseover="wat(this)" onmouseout="wat1(this)">
+                      <span class="text text-center text-white" style="margin-top: 200px;">Watches</span>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="card border-0 shadow img1" style="background-image:url('/static/image/antique.png');" onmouseover="anti(this)" onmouseout="anti1(this)">
+                      <span class="text text-center text-white" style="margin-top: 200px;">Antiques</span>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="card border-0 shadow img1" style="background-image:url('/static/image/stamp.png');" onmouseover="sta(this)" onmouseout="sta1(this)">
+                      <span class="text text-center text-white" style="margin-top: 200px;">Stamps</span>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="card border-0 shadow img1" style="background-image:url('/static/image/perfume.png');" onmouseover="per(this)" onmouseout="per1(this)">
+                      <span class="text text-center text-white" style="margin-top: 200px;">Perfumes</span>
+                    </div>
+                </div>
+                <div class="item">
+                    <div class="card border-0 shadow img1" style="background-image:url('/static/image/jewellery.png');" onmouseover="jew(this)" onmouseout="jew1(this)">
+                      <span class="text text-center text-white" style="margin-top: 200px;">Jeweleries</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  
+  </div>
+</section>
+<section id="best-features" class="text-center">
+  <span class="caption" style="color: #012657;">How?</span>
+  <h2 class="text" style="color: #012657;">How <strong>It Works</strong></h2>
+  <div class="row py-5">
+      <div class="col-md-4 mb-5">
+          <img src="{% static 'image/how1.png' %}">
+          <h4 class="my-4 font-weight-bold" style="color:#012657 ">Register</h4>
+          <p class="grey-text" style="color:#012657 ">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit
+              maiores nam,
+              aperiam minima
+              assumenda deleniti hic.</p>
+      </div>
+      <div class="col-md-4 mb-1">
+          <img src="{% static 'image/how2.png' %}">
+          <h4 class="my-4 font-weight-bold" style="color:#012657 ">Bid</h4>
+          <p class="grey-text" style="color:#012657 ">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit
+              maiores nam,
+              aperiam minima
+              assumenda deleniti hic.</p>
+      </div>
+      <div class="col-md-4 mb-1">
+          <img src="{% static 'image/how3.png' %}">
+          <h4 class="my-4 font-weight-bold" style="color:#012657">Win</h4>
+          <p class="grey-text" style="color:#012657 ">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Reprehenderit
+              maiores nam,
+              aperiam minima
+              assumenda deleniti hic.</p>
+      </div>
+  </div>
+</section>
+<section class="popular-auction padding-top pos-rel py-5 mt-5" style="background-image: url('/static/image/Rectangle\ 1.png'); background-repeat: no-repeat; background-size: auto;">
+  <div class="container">
+      <div class="section-header text-white text-center">
+          <span class="cate">Let The Auction Begins</span>
+          <h2 class="title">Active Auctions</h2>
+          <p>Bid and win great deals,Our auction process is simple, efficient, and transparent.</p>
+      </div>
+      {% if auctions %}
+     
+        <div class="row px-5 mt-5">
+          <div class="col-12 m-auto">
+              <div class="owl-carousel owl-theme">
+                {% for auction in auctions %}
+                {% if todays_date > auction.start|date:'Y-m-d-H-i-s' %}
+                  <div class="item mb-4" style="backdrop-filter: blur(10px);">
+                    <div class="card text-white" style="background-color: #012657;">
+                      <div class="bg-image hover-overlay ripple" data-mdb-ripple-color="light">
+                        <img src="{{auction.image1.url}}" class="img-fluid" style="height: 300px;"/>
+                        <a href="#!">
+                        <div class="mask" style="background-color: rgba(251, 251, 251, 0.15);"></div>
+                        </a>
+                      </div>
+                      <div class="card-body">
+                        <h4 class="card-title">{{auction.product_name}}</h5>
+                        <div class="row py-2">
+                          <div class="col">
+                            <h6 class="card-title">Start: {{auction.start}}</h5>
+                          </div>
+                          <div class="col">
+                            <h6 class="card-title" style="margin-left: auto;">End: {{auction.end}}</h5>
+                          </div>
+                        </div>
+                        <div class="row py-2">
+                          <div class="col">
+                            <h6 class="card-title">Current Bid: {{auction.current_bid}}</h5>
+                          </div>
+                          <div class="col">
+                            <h6 class="card-title" style="margin-left: auto;">Total Bids: {{auction.total_bid}} Bids</h5>
+                          </div>
+                        </div>
+                        
+                      <div class="row d-grip gap-2 py-3">
+                        <a href="{% url 'Buyer:index' %}product/{{auction.product_id}}" class="btn btn-outline-success">Bid Now</a>
+                      </div>
+                      </div>
+                      </div>
+                  </div>
+                  {% endif %}
+                  {% endfor %}
+              </div>
+          </div>
+      </div>
+     
+      {% else %}
+      <h2 class="title text-center text-danger">Oops! Currently No Active Auctions</h2>
+      {% endif %}
+  </div>
+</section>
+
+<section class="my-5">
+<!-- Carousel wrapper -->
+<div id="carouselExampleControls"
+  class="carousel slide text-center carousel-dark"
+  data-mdb-ride="carousel">
+  <div class="carousel-inner">
+    {% for review in reviews %}
+    <div class="carousel-item {% if forloop.first %} active {% endif %}">
+      <img
+        class="rounded-circle shadow-1-strong mb-4"
+        src="{{review.img}}"
+        alt="avatar"
+        style="width: 150px;"
+      />
+      <div class="row d-flex justify-content-center">
+        <div class="col-lg-8">
+          <h5 class="mb-3">{{review.fn}} {{review.ln}}</h5>
+          <div class="text-muted text-justify text-center mx-auto">
+            {{review.review}}
+          </div>
+        </div>
+      </div>
+      <ul class="list-unstyled d-flex justify-content-center text-warning mb-0">
+        <li><i class="fa fa-star{% if review.rating == 0.5 %}-half-o{% elif review.rating < 1 %}-o {% endif %}" aria-hidden="true"></i></li>
+        <li><i class="fa fa-star{% if review.rating == 1.5 %}-half-o{% elif review.rating < 2 %}-o {% endif %}" aria-hidden="true"></i></li>
+        <li><i class="fa fa-star{% if review.rating == 2.5 %}-half-o{% elif review.rating < 3 %}-o {% endif %}" aria-hidden="true"></i></li>
+        <li><i class="fa fa-star{% if review.rating == 3.5 %}-half-o{% elif review.rating < 4 %}-o {% endif %}" aria-hidden="true"></i></li>
+        <li><i class="fa fa-star{% if review.rating == 4.5 %}-half-o{% elif review.rating < 5 %}-o {% endif %}" aria-hidden="true"></i></li>
+      </ul>
+    </div>
+    {% endfor %}
+  </div>
+  <button
+    class="carousel-control-prev"
+    type="button"
+    data-mdb-target="#carouselExampleControls"
+    data-mdb-slide="prev"
+  >
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button
+    class="carousel-control-next"
+    type="button"
+    data-mdb-target="#carouselExampleControls"
+    data-mdb-slide="next"
+  >
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div>
+<!-- Carousel wrapper -->
+</section>
+<script>
+    var owl = $('.owl-carousel');
+        owl.owlCarousel({
+          margin: 10,
+          loop: false,
+          responsive: {
+            0: {
+              items: 1
+            },
+            600: {
+              items: 2
+            },
+            1000: {
+              items: 3
+            }
+          }
+        });
+  function ele(x) {
+    x.style.backgroundImage = "url('{% static 'image/cat-ele1.png' %}')"
+  }
+  function ele1(x) {
+    x.style.backgroundImage = "url('{% static 'image/ele.png' %}')"
+  }
+  function wat(x) {
+    x.style.backgroundImage = "url('{% static 'image/cat-watch.png' %}')"
+  }
+  function wat1(x) {
+    x.style.backgroundImage = "url('{% static 'image/watch.png' %}')"
+  }
+  function anti(x) {
+    x.style.backgroundImage = "url('{% static 'image/cat-antique.png' %}')"
+  }
+  function anti1(x) {
+    x.style.backgroundImage = "url('{% static 'image/antique.png' %}')"
+  }
+  function sta(x) {
+    x.style.backgroundImage = "url('{% static 'image/cat-stamp.png' %}')"
+  }
+  function sta1(x) {
+    x.style.backgroundImage = "url('{% static 'image/stamp.png' %}')"
+  }
+  function per(x) {
+    x.style.backgroundImage = "url('{% static 'image/cat-perfume.png' %}')"
+  }
+  function per1(x) {
+    x.style.backgroundImage = "url('{% static 'image/perfume.png' %}')"
+  }
+  function jew(x) {
+    x.style.backgroundImage = "url('{% static 'image/cat-jewellery.png' %}')"
+  }
+  function jew1(x) {
+    x.style.backgroundImage = "url('{% static 'image/jewellery.png' %}')"
+  }
+</script>
+{% endblock content %}
+    

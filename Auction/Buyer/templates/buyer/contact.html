@@ -1,0 +1,64 @@
+{% extends 'base.html' %}
+{% load static %}
+
+{% block content %}
+
+	<!-- Start Contact -->
+	<section id="contact-us" style="margin-top: 100px;" class="contact-us section">
+		<div class="container-contact100">
+            <div class="card card-registration my-4 " style="width: 80%;margin: auto;">
+              <div class="row g-0">
+                <div class="col-xl-6 d-none d-xl-block">
+                  <img
+                    src="{% static 'image/contact.jpg' %}"
+                    alt="Sample photo"
+                    class="img-fluid"
+                    style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem; object-fit: cover; margin: auto;"
+                  />
+                </div>
+                <div class="col-xl-6">
+                  <div class="card-body p-md-5 text-black">
+                    <h4 class="text-center pb-5" style="font-weight: bold; color: #012657;">CONTACT US</h4>
+                        <form method="POST" action="{% url 'Buyer:contact' %}">
+                          {% csrf_token %}
+                            {% if messages %}
+                            {% for message in messages %}
+                            <div class="alert alert-{{message.tags}}">{{ message }}</div>
+                            {% endfor %}
+                            {% endif %}
+                              <div class="form-outline mb-4">
+                                  <input type="text" id="Name" name="Name" class="form-control form-control-lg" style="height: 50px;" required >
+                                  <label class="form-label" for="Name" style="color: #012657;">Name</label>
+                              </div>
+          
+                              <div class="form-outline mb-4">
+                                <input type="email" id="Email" name="Email" class="form-control form-control-lg" style="height: 50px;" required>
+                                <label class="form-label" for="Email" style="color: #012657;">Email ID</label>
+                              </div>
+                              <div class="form-outline mb-4">
+                                <input type="tel" id="Phone" name="Phone" class="form-control form-control-lg" style="height: 50px;">
+                                <label class="form-label" for="Phone" style="color: #012657;">Phone</label>
+                              </div>
+                              <div class="form-outline mb-4">
+                                <input type="text" id="subject" name="Subject" class="form-control form-control-lg" style="height: 50px;" required>
+                                <label class="form-label" for="subject" style="color: #012657;">Subject</label>
+                              </div>
+          
+                              <div class="form-outline mb-4">
+                                <textarea id="message" class="form-control form-control-lg" rows="5" name="Message"></textarea>
+                                <label class="form-label" for="message" style="color: #012657;">Message</label>
+                              </div>
+                              <div class="d-flex justify-content-end pt-3">
+                                <button type="submit" class="btn btn-lg ms-2 text-white" style="background-color: #012657; width: 100%;">Send Message</button>
+                              </div>
+                        </form>
+                  </div>
+                </div>
+              </div>
+            </div>
+        </div>
+	</section>
+	<!--/ End Contact -->
+	
+{% endblock content %}
+	

@@ -1,0 +1,49 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% block content %}
+<section style="margin-top: 50px;">
+    {% if messages %}
+              {% for message in messages %}
+              <div class="alert alert-{{message.tags}}">{{ message }}</div>
+              {% endfor %}
+              {% endif %}
+              {% if prod %}
+                    <table class="table table-striped table-hove">
+                    <thead class="text-white fs-4 fw-bold" style="background-color: #012657;">
+                        <tr>
+                        <th scope="col">Product_Id</th>
+                        <th scope="col">Product_Name</th>
+                        <th scope="col">Category</th>
+                        <th scope="col">Starting_Bid</th>
+                        <th scope="col">Starting_Time</th>
+                        <th scope="col">Ending_Time</th>
+                        <th scope="col">Delete</th>
+                        <th scope="col">Upadte</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for pr in prod %}
+                                    <tr>
+                                        <td scope="row">{{pr.product_id}}</td>
+                                        <td>{{pr.product_name}}</td>
+                                        <td>{{pr.category}}</td>
+                                        <td>{{pr.price}}</td>
+                                        <td>{{pr.start}}</td>
+                                        <td>{{pr.end}}</td>
+                                        <form>
+                                            <input type="text" name="pro_id" value="{{pr.product_id}}" readonly style="display: none;">
+                                            <td style="text-align: right;"><button type="submit" class="btn btn-danger btn-sm align-items-center text-white"><i class="fa fa-trash"></i></button></td>
+                                        </form>
+                                            <td style="text-align: right;"><a href="{% url 'Seller:edit_product' pr.product_id %}" class="btn btn-primary btn-sm align-items-center text-white"><i class="fa-solid fa-pen"></i></a></td>
+                                        
+                                    </tr>
+                                    {% endfor %}
+                                    
+                    </tbody>
+                    </table>
+                    {% else %}
+                    <h5 class="text-danger text-center">You haven't added any Product....</h5>
+                    {% endif %}
+                    </section>
+{% endblock content %}
+    

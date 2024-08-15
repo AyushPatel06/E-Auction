@@ -1,0 +1,70 @@
+{% extends "admin/base_site.html" %}
+{% load i18n static %}
+
+{% block bodyclass %}{{ block.super }} login{% endblock %}
+
+{% block usertools %}{% endblock %}
+
+{% block nav-global %}{% endblock %}
+
+{% block nav-sidebar %}{% endblock %}
+
+{% block content_title %}{% endblock %}
+
+{% block breadcrumbs %}{% endblock %}
+
+{% block content %}
+<div id="content">
+<div class="row">
+    <div class="card col-sm-12 col-lg-8" style="margin-top: 100px;">
+      <div class="card-header mx-auto">
+        <h4 style="color: #012657;">E-Auction Admin</h4>
+      </div>
+      <div class="card-body">
+          {% if form.errors and not form.non_field_errors %}
+          <p class="errornote text-danger">
+          {% if form.errors.items|length == 1 %}{% translate "Please correct the error below." %}{% else %}{% translate "Please correct the errors below." %}{% endif %}
+          </p>
+          {% endif %}
+          {% if form.non_field_errors %}
+          {% for error in form.non_field_errors %}
+          <p class="errornote text-danger">
+              {{ error }}
+          </p>
+          {% endfor %}
+          {% endif %}
+          {% if user.is_authenticated %}
+          <p class="errornote text-danger">
+          {% blocktranslate trimmed %}
+              You are authenticated as {{ username }}, but are not authorized to
+              access this page. Would you like to login to a different account?
+          {% endblocktranslate %}
+          </p>
+          {% endif %}
+    
+          <form action="{{ app_path }}" method="post" id="login-form" class="col-lg-8 mx-auto">
+            {% csrf_token %}
+            {% for field in form %}
+            <div class="form-outline mb-4">
+              <input type="{{field.widget_type}}" id="{{field.id_for_label}}" name="{{field.html_name}}" class="form-control form-control-lg" style="height: 50px;">
+              <label class="form-label" for="{{field.id}}" style="color: #012657;">{{field.label}}</label>
+          </div>
+          <h6>{{field.errors}}</h6>
+            {% endfor %}
+            {% url 'admin_password_reset' as password_reset_url %}
+            {% if password_reset_url %}
+            <div class="password-reset-link">
+              <a href="{{ password_reset_url }}">Forgotten your password or username?</a>
+            </div>
+            {% endif %}
+            <div class="submit-row py-3">
+              <div class="col-sm-12 col-lg-12 d-flex justify-content-center">
+                <input type="submit" value="{% translate 'Log in' %}" class="btn w-100 text-white" style="background-color: #012657;">
+              </div>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+</div>
+{% endblock %}

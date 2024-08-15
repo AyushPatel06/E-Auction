@@ -1,0 +1,135 @@
+{% extends 'base2.html' %}
+{% load static %}
+{% load crispy_forms_tags %}
+{% block content %}
+<div class="container h-200">
+  <div class="row d-flex justify-content-center align-items-center h-100">
+    <div class="col-12">
+      <div class="card card-registration card-registration-2" style="border-radius: 15px;">
+        <div class="card-body p-0">
+         <form method="POST" enctype="multipart/form-data">
+              {% if messages %}
+                 {% for message in messages %}
+                    <div class="alert alert-{{message.tags}}">{{ message }}</div>
+                 {% endfor %}
+              {% endif %}
+              <h2 class="py-5" style="text-align: center; color: #012657;">Update Product</h2>
+          <div class="row g-0">
+            <div class="col-lg-6">
+              <div class="p-5">
+                <div class="mb-4">
+                  <div class="form-group">
+                    <label class="form-label" style="color: #012657;">Product Name:</label>
+                   {{ form.product_name|as_crispy_field }}
+                  </div>
+                  <hr>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="form-label" style="color: #012657;">Category:</label>
+                    {{ form.category|as_crispy_field }}
+                  </div>
+                  <hr>
+                  <div class="col-md-6">
+                    <label class="form-label" style="color: #012657;">Sub Category:</label>
+                    {{ form.subcategory|as_crispy_field }}
+                  </div>
+                  <hr>
+                </div>
+                <div class="row">
+                  <div class="col-md-6">
+                    <label class="form-label" style="color: #012657;">Bid Starting Time:</label>
+                    {{ form.start|as_crispy_field }}
+                  </div>
+                  <hr>
+                  <div class="col-md-6">
+                    <label class="form-label" style="color: #012657;">Bid Ending Time:</label>
+                    {{ form.end|as_crispy_field }}
+                  </div>
+                  <hr>
+                </div>
+                <div class="row">
+                <div class="pb-2">
+                  <label class="form-label" style="color: #012657;">Price:</label>
+                    {{ form.price|as_crispy_field }}
+                </div>
+                <hr>
+                </div>
+                <div class="form-group">
+                  <label class="form-label" style="color: #012657;">Description:</label>
+                    {{ form.description|as_crispy_field }}
+                  </div>
+                  <hr>
+                  </div>
+                </div>
+            <div class="col-lg-6 bg-indigo text-black ">
+              <div class="p-5">
+                  <div class="row py-2">
+                      <div class="col-md-6">
+                        <label class="form-label" style="color: #012657;">Image:</label>
+                        {{ form.image1|as_crispy_field }}
+                      </div>
+                      <hr>
+                      <div class="col-md-6">
+                        <label class="form-label" style="color: #012657;">Image:</label>
+                        {{ form.image2|as_crispy_field }}
+                      </div>
+                      <hr>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-6">
+                        <label class="form-label" style="color: #012657;">Image:</label>
+                        {{ form.image3|as_crispy_field }}
+                      </div>
+                      <hr>
+                      <div class="col-md-6">
+                        <label class="form-label" style="color: #012657;">Image:</label>
+                        {{ form.image4|as_crispy_field }}
+                      </div>
+                      <hr>
+                  </div>
+                  <div class="row">
+                      <div class="col-md-6">
+                        <label class="form-label" style="color: #012657;">Image:</label>
+                        {{ form.image5|as_crispy_field }}
+                      </div>
+                      <hr>
+                      <div class="col-md-6">
+                        <label class="form-label" style="color: #012657;">Image:</label>
+                        {{ form.image6|as_crispy_field }}
+                      </div>
+                      <hr>
+                  </div>
+                {% csrf_token %}
+                
+
+              </div>
+            </div>
+          </div>
+              <button type="submit" class="btn btn-lg align-items-center col-12 text-white" style="background-color: #012657;" value="Save">Update Product</button>
+        </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<script type="text/javascript">
+	function subcat() {
+		{% for sc in subcat %}
+		if (document.getElementById('category').value == {{sc.0.id}}) {
+		$("#subcategory")
+	    .replaceWith('<select id="subcategory" name="subcategory" class="form-control form-control-lg" value="{{p.subcategory}}">' + 
+        '<option selected>Select Subcategory Here...</option>' +
+	    	 {% for op in sc|slice:"1:" %}
+	          '<option value="{{op}}" >{{op}}</option>' +
+	         {% endfor %}
+	        '</select>');
+		}
+	    {% endfor %}
+	}
+	document.getElementById('category').onchange = subcat;
+</script>
+
+
+{% endblock content %}
+

@@ -1,0 +1,11 @@
+
+<div class="col-12" style="margin-top:100px ;">
+    <!--   SIDEBAR   -->
+    <ul class="list-group">
+      <a class="list-group-item {% if '/myorders/' in request.path %}text-success{% endif %}" href="{% url 'Buyer:myorders' %}"> My Orders </a>
+      <a class="list-group-item {% if '/change-password/' in request.path %}text-success{% endif %}" href="{% url 'change_password' %}"> Change Password </a>
+    </ul>
+    <br>
+
+    <!--   SIDEBAR .//END   -->
+  </div>

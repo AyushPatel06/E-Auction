@@ -1,0 +1,57 @@
+{% load static %}
+<div class="tab-pane fade show active" id="tabs-login" role="tabpanel" aria-labelledby="tab-login">
+    <div class="row d-flex justify-content-center align-items-center h-100">
+      <div class="col">
+        <div class="card card-registration my-4">
+          <div class="row g-0">
+            <div class="col-xl-6">
+            <div class="card-body p-md-5 text-black">
+              <form method="post" action="{% url 'Buyer:login' %}">
+                {% csrf_token %}
+              <div class="form-outline mb-4">
+                  <input type="text" id="username1" name="username1" class="form-control form-control-lg" style="height: 50px;" required aria-errormessage=""><span class="fa fa-user" style="float: right;position: relative; margin-top: -34px; margin-right: 8px; color: #012657;"></span>
+                  <label class="form-label" for="username1" style="color: #012657;">Username</label>
+              </div>
+
+              <div class="form-outline mb-4">
+                <input type="password" id="password1" name="password1" class="form-control form-control-lg" style="height: 50px;"><span class="fa fa-key" style="float: right;position: relative; margin-top: -34px; margin-right: 8px; color: #012657;"></span>
+                <label class="form-label" for="password1" style="color: #012657;">Password</label>
+              </div>
+
+              <div class="d-flex justify-content-between align-items-center">
+                <!-- Checkbox -->
+                <div class="form-check mb-0">
+                  <input class="form-check-input me-2"  name="remember_me" type="checkbox" value="" id="form2Example3" />
+                  <label class="form-check-label" for="form2Example3">
+                    Remember me
+                  </label>
+                </div>
+                <a href="{% url 'password_reset' %}" class="text-body">Forgot password?</a>
+              </div>
+
+              <div class="d-flex justify-content-center pt-3">
+                <button type="submit" class="btn btn-lg ms-2 text-white" style="background-color: #012657; width: 100%;">Login</button>
+              </div>
+              <p class="d-flex justify-content-center py-5">Don't have account?
+                <a data-mdb-toggle="tab"
+                href="#tabs-register"
+                role="tab"
+                aria-controls="tabs-register"
+                aria-selected="false">Register</a>
+            </p>
+    </form>
+            </div>
+            </div>
+            <div class="col-xl-6 d-none d-xl-block">
+              <img
+                src="{% static 'image/login.png' %}"
+                alt="Sample photo"
+                class="img-fluid"
+                style="border-top-left-radius: .25rem; border-bottom-left-radius: .25rem;"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+      </div>
+  </div>
